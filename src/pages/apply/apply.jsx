@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion , AnimatePresence } from 'framer-motion';
 import Navbar from "../../Components/Navbar.jsx";
 import Footer from '../../Components/Footer';
+import { trackButtonClick } from '../../utils/analytics.jsx';
 export default function TournamentApplicationForm() {
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,7 +37,7 @@ export default function TournamentApplicationForm() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const validateForm = () => {
     const newErrors = {};
@@ -65,7 +66,7 @@ export default function TournamentApplicationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+     trackButtonClick('Submit Button', 'Contact Form');
     if (!validateForm()) return;
     
     setSubmitting(true);
@@ -135,14 +136,14 @@ export default function TournamentApplicationForm() {
     <div>
       <Navbar/>
     <div className="min-h-screen bg-gradient-to-br  pt-38  from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
-      <motion.div
+      <Motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
         className="w-full max-w-2xl"
       >
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <motion.div
+          <Motion.div
             animate={{
               scale: [1, 1.2, 1],
               rotate: [0, 180, 360],
@@ -150,7 +151,7 @@ export default function TournamentApplicationForm() {
             transition={{ duration: 20, repeat: Infinity }}
             className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-red-500 to-orange-500 rounded-full blur-3xl opacity-20"
           />
-          <motion.div
+          <Motion.div
             animate={{
               scale: [1.2, 1, 1.2],
               rotate: [360, 180, 0],
@@ -160,15 +161,15 @@ export default function TournamentApplicationForm() {
           />
         </div>
 
-        <motion.div
+        <Motion.div
           variants={itemVariants}
           className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20"
         >
-          <motion.div
+          <Motion.div
             variants={itemVariants}
             className="text-center mb-8"
           >
-            <motion.div
+            <Motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
@@ -179,25 +180,25 @@ export default function TournamentApplicationForm() {
                   Join the Battle
                 </h1>
               </div>
-            </motion.div>
+            </Motion.div>
             <p className="text-gray-300 text-sm">Register your team for glory</p>
-          </motion.div>
+          </Motion.div>
 
           <AnimatePresence>
             {success && (
-              <motion.div
+              <Motion.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 className="mb-6 p-4 bg-green-500/20 border border-green-500/50 rounded-xl text-green-300 text-center"
               >
                 🎉 Application submitted successfully!
-              </motion.div>
+              </Motion.div>
             )}
           </AnimatePresence>
 
           <div className="space-y-5">
-            <motion.div variants={itemVariants}>
+            <Motion.div variants={itemVariants}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Select Tournament *
               </label>
@@ -223,17 +224,17 @@ export default function TournamentApplicationForm() {
                 </div>
               </div>
               {errors.tournamentId && (
-                <motion.p
+                <Motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.tournamentId}
-                </motion.p>
+                </Motion.p>
               )}
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants}>
+            <Motion.div variants={itemVariants}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Team Name *
               </label>
@@ -246,25 +247,25 @@ export default function TournamentApplicationForm() {
                 className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-all duration-300"
               />
               {errors.teamName && (
-                <motion.p
+                <Motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.teamName}
-                </motion.p>
+                </Motion.p>
               )}
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants} className="pt-4">
+            <Motion.div variants={itemVariants} className="pt-4">
               <div className="flex items-center gap-2 mb-4">
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
                 <span className="text-orange-500 text-sm font-semibold">Captain Details</span>
                 <div className="h-px flex-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent" />
               </div>
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants}>
+            <Motion.div variants={itemVariants}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Captain Name *
               </label>
@@ -277,17 +278,17 @@ export default function TournamentApplicationForm() {
                 className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-all duration-300"
               />
               {errors.captainName && (
-                <motion.p
+                <Motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.captainName}
-                </motion.p>
+                </Motion.p>
               )}
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants}>
+            <Motion.div variants={itemVariants}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Captain Email *
               </label>
@@ -300,17 +301,17 @@ export default function TournamentApplicationForm() {
                 className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-all duration-300"
               />
               {errors.captainEmail && (
-                <motion.p
+                <Motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.captainEmail}
-                </motion.p>
+                </Motion.p>
               )}
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants}>
+            <Motion.div variants={itemVariants}>
               <label className="block text-sm font-medium text-gray-300 mb-2">
                 Captain Phone *
               </label>
@@ -323,25 +324,25 @@ export default function TournamentApplicationForm() {
                 className="w-full bg-white/5 border-2 border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 transition-all duration-300"
               />
               {errors.captainPhone && (
-                <motion.p
+                <Motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="text-red-400 text-xs mt-1"
                 >
                   {errors.captainPhone}
-                </motion.p>
+                </Motion.p>
               )}
-            </motion.div>
+            </Motion.div>
 
-            <motion.div variants={itemVariants} className="pt-4">
-              <motion.button
+            <Motion.div variants={itemVariants} className="pt-4">
+              <Motion.button
                 onClick={handleSubmit}
                 disabled={submitting || loading}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full cursor-pointer bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group"
               >
-                <motion.div
+                <Motion.div
                   className="absolute inset-0 bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500"
                   initial={{ x: '100%' }}
                   whileHover={{ x: '0%' }}
@@ -365,18 +366,18 @@ export default function TournamentApplicationForm() {
                     </>
                   )}
                 </span>
-              </motion.button>
-            </motion.div>
+              </Motion.button>
+            </Motion.div>
           </div>
 
-          <motion.p
+          <Motion.p
             variants={itemVariants}
             className="text-center text-gray-400 text-xs mt-6"
           >
             All fields marked with * are required
-          </motion.p>
-        </motion.div>
-      </motion.div>
+          </Motion.p>
+        </Motion.div>
+      </Motion.div>
     </div>
       <Footer/>
       </div>
