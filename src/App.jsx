@@ -1,29 +1,35 @@
-// src/App.jsx
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import Dashboard from "./pages/Home/Home.jsx";
 import Tournament from "./pages/Tournaments/Tournament.jsx";
 import TournamentApplicationForm from "./pages/apply/apply.jsx";
 import PrivacyPolicyPage from "./pages/privacypolicy.jsx";
-import { useLocation } from 'react-router-dom';
-import { initGA, trackPageView } from './utils/analytics';
+import { initGA, trackPageView } from "./utils/analytics";
 
 function App() {
   const location = useLocation();
 
-  // Initialize GA on app mount
   useEffect(() => {
-    initGA();
+    // Check consent from localStorage
+    const consent = localStorage.getItem("userConsent");
+
+    // Only initialize GA if consent is accepted
+    if (consent === "accepted") {
+      initGA();
+    }
   }, []);
 
-  // Track page views on route change
   useEffect(() => {
-    trackPageView(location.pathname + location.search);
+    // Again check consent before tracking page views
+    const consent = localStorage.getItem("userConsent");
+
+    if (consent === "accepted") {
+      trackPageView(location.pathname + location.search);
+    }
   }, [location]);
 
   return (
     <>
-      {/* <AnalyticsTracker /> */}
       <Routes>
         <Route path="/apply" element={<TournamentApplicationForm />} />
         <Route path="/tournaments" element={<Tournament />} />
