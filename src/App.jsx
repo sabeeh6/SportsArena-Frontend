@@ -10,6 +10,8 @@ import NotFound from "./pages/notFound.jsx";
 import AdminAuth from "./pages/auth/AdminAuth.jsx";
 import DashboardAdmin from "./pages/Dashboard.jsx";
 import ScrollToTop from "./Components/scroll.jsx";
+import Login from "./pages/auth/login.jsx";
+import RegistrationPage from "./pages/auth/signUp.jsx";
 
 function App() {
   const location = useLocation();
@@ -85,6 +87,8 @@ function App() {
         <Route path ="/auth" element={<AdminAuth/>}/>
         <Route path ="/panel" element={<DashboardAdmin/>}/>
         <Route path="*" element={<NotFound/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<RegistrationPage />} />
 
       </Routes>
     </>
