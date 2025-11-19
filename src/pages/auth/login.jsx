@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mail, Lock, Eye, EyeOff, Trophy, Zap, Shield, ArrowRight, Chrome, Facebook } from 'lucide-react';
+import api from '../../api/api';
+import {useNavigate} from "react-router-dom"
 
 const SportsLoginPage = () => {
   const [email, setEmail] = useState('');
@@ -7,6 +9,9 @@ const SportsLoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [particles, setParticles] = useState([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate =useNavigate();
 
   // Generate animated particles
   useEffect(() => {
@@ -21,6 +26,10 @@ const SportsLoginPage = () => {
     setParticles(newParticles);
   }, []);
 
+const handlePage = ()=>{
+    navigate("/signUp")
+}
+
   // Mouse move effect
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -30,13 +39,48 @@ const SportsLoginPage = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const handleLogin = () => {
-    if (email && password) {
-      alert(`🎉 Login Successful!\nEmail: ${email}\nPassword: ${'•'.repeat(password.length)}`);
-    } else {
-      alert('❌ Please fill in all fields!');
+const handleLogin = async () => {
+  setError('');
+
+  if (!email || !password) {
+    setError("Please fill in all fields.");
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const response = await api.post("http://localhost:3009/api/auth/login-user", {
+      email,
+      password
+    });
+
+    // API response (you can console.log this)
+    const userData = response.data;
+
+    // Save token (if exists)
+    if (userData?.token) {
+      localStorage.setItem("authToken", userData.token);
     }
-  };
+
+    navigate("/panel")
+    console.log("User => ", userData);
+    alert("🎉 Login Successful!");
+
+  } catch (err) {
+    console.log(err);
+
+    if (err.response?.data?.message) {
+      setError(err.response.data.message);
+    } else {
+      setError("Something went wrong. Try again.");
+    }
+
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-slate-950 relative overflow-hidden flex items-center justify-center p-4">
@@ -122,7 +166,7 @@ const SportsLoginPage = () => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 mt-12">
+            {/* <div className="grid grid-cols-3 gap-4 mt-12">
               {[
                 { num: '50K+', label: 'Players' },
                 { num: '1000+', label: 'Tournaments' },
@@ -135,7 +179,7 @@ const SportsLoginPage = () => {
                   <div className="text-gray-400 text-sm mt-1">{stat.label}</div>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Right Side - Login Form */}
@@ -152,7 +196,7 @@ const SportsLoginPage = () => {
                     <Trophy className="w-10 h-10 text-white" />
                   </div>
                 </div>
-                <h2 className="text-4xl font-black text-white mb-2">
+                <h2 className="text-4xl font-black bg-gradient-to-r from-orange-400 to-red-500 bg-clip-text text-transparent  mb-2">
                   Welcome Back!
                 </h2>
                 <p className="text-gray-400 text-lg">
@@ -246,22 +290,39 @@ const SportsLoginPage = () => {
                     Forgot Password?
                   </button>
                 </div>
+                {error && (
+                    <p className="text-red-500 text-sm font-semibold bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                        {error}
+                    </p>
+                )}
 
                 {/* Login Button */}
-                <button
+                {/* <button
                   onClick={handleLogin}
                   className="group w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-orange-500/50 flex items-center justify-center space-x-2"
                 >
                   <span className="text-lg">Sign In</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </button>
-
+                </button> */}
+<button
+  onClick={handleLogin}
+  disabled={loading}
+  className="group w-full bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-600 hover:to-red-700 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-orange-500/50 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+>
+  <span className="text-lg">
+    {loading ? "Signing In..." : "Sign In"}
+  </span>
+  {!loading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+</button>
                 {/* Sign Up Link */}
                 <p className="text-center text-gray-400 text-sm">
                   Don't have an account?{' '}
-                  <button className="text-orange-500 hover:text-orange-400 font-bold transition-colors">
-                    Create Account
-                  </button>
+                    <button
+                        className="text-orange-500 hover:text-orange-400 font-bold transition-colors cursor-pointer select-none   focus:outline-none  "
+                        onClick={handlePage}
+                        >
+                        Create Account
+                    </button>
                 </p>
               </div>
 

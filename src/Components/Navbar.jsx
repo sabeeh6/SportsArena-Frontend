@@ -209,7 +209,7 @@ export default function Header() {
 
           {/* Desktop Login Button */}
           <Motion.div 
-            className="hidden lg:flex items-center gap-3 z-10 relative"
+            className="hidden lg:flex items-center gap-3 z-10 relative "
             variants={buttonVariants}
             initial="initial"
             animate="animate"
@@ -221,10 +221,21 @@ export default function Header() {
             >
               <Link
                 to="/apply"
+                className="relative bg-gradient-to-r from-red-500 via-orange-500 to-red-500 text-white px-5 xl:px-6 py-2 xl:py-2.5 rounded-lg font-bold text-sm xl:text-base shadow-lg shadow-red-500/300 overflow-hidden group/btn"
+              >
+                <span className="relative z-10">Apply</span>
+              </Link>
+            </Motion.div>
+            <Motion.div
+              variants={buttonVariants}
+              whileHover="hover"
+              whileTap="tap"
+            >
+              <Link
+                to="/login"
                 className="relative bg-gradient-to-r from-red-500 via-orange-500 to-red-500 text-white px-5 xl:px-6 py-2 xl:py-2.5 rounded-lg font-bold text-sm xl:text-base shadow-lg shadow-red-500/30 overflow-hidden group/btn"
               >
-
-                <span className="relative z-10">Apply</span>
+                <span className="relative z-10">Sign In </span>
               </Link>
             </Motion.div>
           </Motion.div>
@@ -304,6 +315,18 @@ export default function Header() {
                     className="block w-full bg-gradient-to-r from-red-500 via-orange-500 to-red-500 text-white text-center px-4 py-3 rounded-xl font-bold text-base sm:text-lg shadow-lg shadow-red-500/30 hover:shadow-red-500/50 transition-all duration-300"
                   >
                     Apply
+                  </Link>
+                </Motion.div>
+                <Motion.div
+                  variants={mobileItemVariants}
+                  className="pt-4 border-t border-orange-500/20"
+                >
+                  <Link
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="block w-full bg-gradient-to-r from-red-500 via-orange-500 to-red-500 text-white text-center px-4 py-3 rounded-xl font-bold text-base sm:text-lg shadow-lg shadow-red-500/30 hover:shadow-red-500/50 transition-all duration-300"
+                  >
+                    Sign In
                   </Link>
                 </Motion.div>
               </div>
