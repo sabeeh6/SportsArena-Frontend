@@ -64,8 +64,9 @@ const handleLogin = async () => {
     }
 
     navigate("/panel")
+
     console.log("User => ", userData);
-    alert("🎉 Login Successful!");
+    // alert("🎉 Login Successful!");
 
   } catch (err) {
     console.log(err);

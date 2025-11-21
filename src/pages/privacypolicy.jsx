@@ -194,8 +194,13 @@ export default function PrivacyPolicyPage() {
 <p>We may update Our Privacy Policy from time to time. We will notify You of any changes by posting the new Privacy Policy on this page.</p>
 <p>We will let You know via email and/or a prominent notice on Our Service, prior to the change becoming effective and update the &quot;Last updated&quot; date at the top of this Privacy Policy.</p>
 <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+<h3>Third-Party Tracking Technologies</h3>
+<p>We use third-party analytics and tracking tool which is  Google Analytics to monitor and improve the performance of our Service. These tools help us understand how users interact with our website, measure marketing effectiveness, and enhance user experience.
+
+The information collected may include device information, IP addresses, browser type, pages visited, and other usage data. This data is processed in accordance with the privacy policies of the respective third-party providers.</p>
 <h2>Contact Us</h2>
-<p>If you have any questions about this Privacy Policy, You can contact us:</p>
+<p>If you want to remove or delete your complate data/account or wanna opt-out(disable tracking tool) or have any questions about this Privacy Policy then feel free to mail us active email, we may verify your identity before processing your request</p>
+<p> You can contact us:</p>
 <ul>
 <li>By email: gathcooley@gmail.com</li>
 </ul>
